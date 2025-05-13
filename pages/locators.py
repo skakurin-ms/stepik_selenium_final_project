@@ -13,4 +13,3 @@ class ProductPageLocators:
     MESSAGE_WITH_ADDED_PRODUCT_PRICE = (By.CSS_SELECTOR, ".alertinner > p > strong")
     PRODUCT_NAME_IN_TITLE = (By.CSS_SELECTOR, "h1")
     PRODUCT_PRICE_IN_TITLE = (By.CSS_SELECTOR, ".col-sm-6.product_main > .price_color")
-#div.col-sm-6.product_main
