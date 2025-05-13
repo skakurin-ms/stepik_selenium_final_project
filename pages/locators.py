@@ -15,4 +15,6 @@ class ProductPageLocators:
     PRODUCT_NAME_IN_TITLE = (By.CSS_SELECTOR, "h1")
     PRODUCT_PRICE_IN_TITLE = (By.CSS_SELECTOR, ".col-sm-6.product_main > .price_color")
 
-
+class BasePageLocators:
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
