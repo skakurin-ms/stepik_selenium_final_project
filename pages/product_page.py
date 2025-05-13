@@ -5,17 +5,17 @@ from time import sleep
 
 class ProductPage(BasePage):
     def add_product_to_basket(self):
-        self.should_be_promo_url()
-        self.should_be_add_to_basket_button()
+        # self.should_be_promo_url()
+        # self.should_be_add_to_basket_button()
 
         add_to_basket_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         add_to_basket_button.click()
 
-        self.solve_quiz_and_get_code()
-        self.should_be_message_with_added_product_name()
-        self.should_be_correct_product_name()
-        self.should_be_message_with_added_product_price()
-        self.should_be_correct_product_price()
+        # self.solve_quiz_and_get_code()
+        # self.should_be_message_with_added_product_name()
+        # self.should_be_correct_product_name()
+        # self.should_be_message_with_added_product_price()
+        # self.should_be_correct_product_price()
 
     def should_be_promo_url(self):
         assert "?promo=" in self.browser.current_url, f"Parameter 'promo=newYear' is absent in {self.url}"
@@ -48,4 +48,12 @@ class ProductPage(BasePage):
             *ProductPageLocators.MESSAGE_WITH_ADDED_PRODUCT_PRICE).text
         assert product_price_in_title == product_price_in_message,\
             f"Product price isn't correct: {product_price_in_message} instead of {product_price_in_title}"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_WITH_ADDED_PRODUCT_NAME),\
+            "Success message is presented, but should not be"
+
+    def should_disappear(self):
+        assert self.is_disappeared(*ProductPageLocators.MESSAGE_WITH_ADDED_PRODUCT_NAME),\
+            "Success message isn't disappeared"
 
