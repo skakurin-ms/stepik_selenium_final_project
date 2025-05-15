@@ -6,6 +6,7 @@ from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
 from .data import f as fake
+from .data import r as random_word
 
 @pytest.mark.add_to_basket
 class TestUserAddToBasketFromProductPage:
@@ -15,7 +16,7 @@ class TestUserAddToBasketFromProductPage:
         page = LoginPage(browser, link)
         page.open()
 
-        test_email = fake.email()
+        test_email = random_word.get_random_word()+ fake.email()
         test_password = fake.password()
 
         page.register_new_user(test_email, test_password)
@@ -27,6 +28,7 @@ class TestUserAddToBasketFromProductPage:
         page.open()
         page.should_not_be_success_message()
 
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser):
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
         page = ProductPage(browser, link)
@@ -40,6 +42,7 @@ class TestUserAddToBasketFromProductPage:
         page.should_be_message_with_added_product_price()
         page.should_be_correct_product_price()
 
+@pytest.mark.need_review
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
@@ -94,6 +97,7 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page.open()
     page.should_be_login_link()
 
+@pytest.mark.need_review
 def test_guest_can_go_to_login_page_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = LoginPage(browser, link)
@@ -101,7 +105,7 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page.go_to_login_page()
     page.should_be_login_page()
 
-@pytest.mark.new
+@pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/"
     page = ProductPage(browser, link)
