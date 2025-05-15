@@ -3,7 +3,9 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
+from .locators import BasketPageLocators
 import math
+import time
 
 class BasePage:
     def __init__(self, browser, url, timeout=10):
@@ -56,18 +58,20 @@ class BasePage:
         except (NoAlertPresentException, TimeoutException):
             print("No second alert presented")
 
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK),\
+            "Login link isn't presented"
+
     def go_to_login_page(self):
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
 
-    def should_be_login_link(self):
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+    def should_be_view_basket_button(self):
+        assert self.is_element_present(*BasePageLocators.VIEW_BASKET_BUTTON),\
+            "View basket button isn't presented"
 
     def go_to_basket_page(self):
-        pass
-        # link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
-        # link.click()
+        view_basket_button = self.browser.find_element(*BasePageLocators.VIEW_BASKET_BUTTON)
+        view_basket_button.click()
 
-    def should_be_basket_button(self):
-        pass
 
