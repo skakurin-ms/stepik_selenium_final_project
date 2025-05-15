@@ -1,21 +1,10 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
 
-from time import sleep
-
 class ProductPage(BasePage):
     def add_product_to_basket(self):
-        # self.should_be_promo_url()
-        # self.should_be_add_to_basket_button()
-
         add_to_basket_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         add_to_basket_button.click()
-
-        # self.solve_quiz_and_get_code()
-        # self.should_be_message_with_added_product_name()
-        # self.should_be_correct_product_name()
-        # self.should_be_message_with_added_product_price()
-        # self.should_be_correct_product_price()
 
     def should_be_promo_url(self):
         assert "?promo=" in self.browser.current_url, f"Parameter 'promo=newYear' is absent in {self.url}"

@@ -1,9 +1,44 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
+from .data import f as fake
+
+@pytest.mark.add_to_basket
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+        page = LoginPage(browser, link)
+        page.open()
+
+        test_email = fake.email()
+        test_password = fake.password()
+
+        page.register_new_user(test_email, test_password)
+        page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_promo_url()
+        page.should_be_add_to_basket_button()
+        page.add_product_to_basket()
+        page.solve_quiz_and_get_code()
+        page.should_be_message_with_added_product_name()
+        page.should_be_correct_product_name()
+        page.should_be_message_with_added_product_price()
+        page.should_be_correct_product_price()
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
@@ -29,6 +64,12 @@ def test_guest_can_add_product_to_basket(browser, link):
     page.should_be_message_with_added_product_price()
     page.should_be_correct_product_price()
 
+def test_guest_cant_see_success_message(self, browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_not_be_success_message()
+
 @pytest.mark.xfail
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
@@ -36,12 +77,6 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page.open()
     page.add_product_to_basket()
     page.solve_quiz_and_get_code()
-    page.should_not_be_success_message()
-
-def test_guest_cant_see_success_message(browser):
-    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
-    page = ProductPage(browser, link)
-    page.open()
     page.should_not_be_success_message()
 
 @pytest.mark.xfail
