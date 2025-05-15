@@ -37,3 +37,11 @@ def test_guest_should_see_register_form(browser):
     page.open()
     page.should_be_register_form()
 
+def test_guest_cant_see_product_in_basket_opened_from_main_page():
+    pass
+
+
+
+
+
+
