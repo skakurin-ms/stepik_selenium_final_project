@@ -1,7 +1,4 @@
 import pytest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
